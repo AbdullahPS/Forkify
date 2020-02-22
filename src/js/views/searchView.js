@@ -11,7 +11,7 @@ const limitRecipeTitle=(title,limit=17)=>{
 const renderElement =el => {
     const markUp = `
             <li>
-                            <a class="results__link results__link--active" href="#23456">
+                            <a class="results__link results__link--active" href="#${el.recipe_id}">
                                 <figure class="results__fig">
                                     <img src="${el.image_url}" alt="${el.title}">
                                 </figure>

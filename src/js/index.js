@@ -1,6 +1,9 @@
+
+//Search Controller
 import Search from './models/Search'
 import {element,renderLoader,stopLoader} from './views/base'
 import * as searchView from './views/searchView'
+import Recipe from './models/Recipe'
 
 
 /** Global state of ther app
@@ -28,7 +31,7 @@ const ctrlSearch = async() => {
         stopLoader();
         searchView.renderInput(state.search.result);
         }
-    
+ 
 
 }
 element.searchForm.addEventListener('submit',(e)=>{
@@ -48,3 +51,8 @@ element.resultPages.addEventListener('click',e=>{
                 }
 })
 
+//Recipe Controller
+
+const data =new Recipe(46956);
+data.getRecipe();
+console.log(data);
