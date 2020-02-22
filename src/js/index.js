@@ -1,5 +1,5 @@
 import Search from './models/Search'
-import {element} from './views/base'
+import {element,renderLoader} from './views/base'
 import * as searchView from './views/searchView'
 
 
@@ -21,6 +21,7 @@ const ctrlSearch = async() => {
     //3>Prepare ui
         searchView.clearInput();
         searchView.clearOldResults();
+        renderLoader(element.parentResult);
      //4>Search for recipes
        await state.search.getResult();
     //4>render results on ui 
