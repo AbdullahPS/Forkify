@@ -6,6 +6,7 @@ import * as searchView from './views/searchView'
 import Recipe from './models/Recipe'
 
 
+
 /** Global state of ther app
  * -Search object
  * -current recipe object
@@ -51,8 +52,24 @@ element.resultPages.addEventListener('click',e=>{
                 }
 })
 
+
+
 //Recipe Controller
 
-const data =new Recipe(46956);
-data.getRecipe();
-console.log(data);
+const ctrlRecipe=async()=> {
+//get the id of the recipe from the url
+  
+    const hashTag = window.location.hash;
+    if(hashTag){
+        //remove the hashtag in it
+        const recipeID=hashTag.replace('#','')
+        //create a new recipe witht the given id in constant recipe (awaited )
+        state.recipe =  new Recipe(recipeID);
+            try{
+            await state.recipe.getRecipe();
+            console.log(state.recipe);
+            } catch(error){console.log(error);}
+
+        }
+}
+['hashchange','load'].forEach(cur => window.addEventListener(cur,ctrlRecipe));
