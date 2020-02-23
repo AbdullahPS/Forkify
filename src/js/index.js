@@ -67,6 +67,7 @@ const ctrlRecipe=async()=> {
         state.recipe =  new Recipe(recipeID);
             try{
             await state.recipe.getRecipe();
+            state.recipe.parseIngredients();
             console.log(state.recipe);
             } catch(error){console.log(error);}
 
