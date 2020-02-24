@@ -75,3 +75,14 @@ export const renderInput=(dataArray,page=1,elToshow=10) =>{
 
 
 };
+export const highlightSelected=id=>{
+
+const allSelectedPrv=document.querySelectorAll('.results__link--active');
+allSelectedPrv.forEach(cur=>{
+
+    cur.classList.remove("results__link--active");
+});
+
+document.querySelector(`a[href="#${id}"]`).classList.add("results__link--active");
+
+};

@@ -33,7 +33,7 @@ const ctrlSearch = async() => {
     //4>render results on ui 
         stopLoader();
         searchView.renderInput(state.search.result);
-        }
+    }
  
 
 }
@@ -70,7 +70,9 @@ const ctrlRecipe=async()=> {
         //get ui ready
         renderLoader(element.recipeForm);
         //remove the hashtag in it
-        const recipeID=hashTag.replace('#','')
+        const recipeID=hashTag.replace('#','');
+        searchView.highlightSelected(recipeID);
+
         //create a new recipe witht the given id in constant recipe (awaited )
         state.recipe =  new Recipe(recipeID);
             try{
