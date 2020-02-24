@@ -32,6 +32,7 @@ export default class Recipe{
         //make the units in original array be like the ones in abbreviations array 
         const original = ['tablespoons','tablespoon','ounces','ounce','teaspoons','teaspoon','cups','pounds']; 
         const abbreviations = ['tbsp','tbsp','oz','oz','tsp','tsp','cup','pound'];
+        const units =[...abbreviations,'g','kg',]
         let ingredient = this.ingredients.map((el)=>{
 
              ingredient=el.toLowerCase();
@@ -51,7 +52,7 @@ export default class Recipe{
              *  if there is an index <-1 we have the index of the unit
              * sometimes there is a 'number' 'like 1 piece' we need this number to take it also  
              * */
-            const unitIndex=arrIngredient.findIndex(el2=>abbreviations.includes(el2));
+            const unitIndex=arrIngredient.findIndex(el2=>units.includes(el2));
                 console.log(arrIngredient);
             let objIng={};
             

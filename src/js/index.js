@@ -3,6 +3,8 @@
 import Search from './models/Search'
 import {element,renderLoader,stopLoader} from './views/base'
 import * as searchView from './views/searchView'
+import * as recipeView from './views/recipeView'
+
 import Recipe from './models/Recipe'
 
 
@@ -57,10 +59,16 @@ element.resultPages.addEventListener('click',e=>{
 //Recipe Controller
 
 const ctrlRecipe=async()=> {
+
+
+
 //get the id of the recipe from the url
   
     const hashTag = window.location.hash;
     if(hashTag){
+
+        //get ui ready
+        renderLoader(element.recipeForm);
         //remove the hashtag in it
         const recipeID=hashTag.replace('#','')
         //create a new recipe witht the given id in constant recipe (awaited )
@@ -70,6 +78,11 @@ const ctrlRecipe=async()=> {
             state.recipe.parseIngredients();
             console.log(state.recipe);
             } catch(error){console.log(error);}
+            stopLoader();
+            recipeView.clearRecipe();
+            recipeView.renderRecipe(state.recipe);
+
+
 
         }
 }

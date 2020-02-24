@@ -4,7 +4,12 @@ searchInput:document.querySelector('.search__field'),
 resultsList:document.querySelector('.results__list'),
 parentResult:document.querySelector('.results'),
 resultPages:document.querySelector('.results__pages'),
-recipeForm:document.querySelector('.recipe')
+recipeForm:document.querySelector('.recipe'),
+recipeFormList:document.querySelector('.recipe__ingredients')
+
+
+
+
 
 };
 const stringElements ={
