@@ -21,15 +21,19 @@ const search = document.querySelector('.search');
 const ctrlSearch = async() => {
     //1> get query from the view
      const query=searchView.getInput();
+     state.search=new Search(query);
+
+     await state.search.getResult();
         if(query){
     //2> new Search Object and add to state 
-         state.search=new Search(query);
     //3>Prepare ui
         searchView.clearInput();
         searchView.clearOldResults();
         renderLoader(element.parentResult);
      //4>Search for recipes
-       await state.search.getResult();
+    
+     
+
     //4>render results on ui 
         stopLoader();
         searchView.renderInput(state.search.result);
@@ -64,14 +68,14 @@ const ctrlRecipe=async()=> {
 
 //get the id of the recipe from the url
   
-    const hashTag = window.location.hash;
-    if(hashTag){
+    const recipeID = window.location.hash.replace('#','');
+    if(recipeID){
 
         //get ui ready
-        renderLoader(element.recipeForm);
+        if(state.recipe)
+        {renderLoader(element.recipeForm);
         //remove the hashtag in it
-        const recipeID=hashTag.replace('#','');
-        searchView.highlightSelected(recipeID);
+        searchView.highlightSelected(recipeID);}
 
         //create a new recipe witht the given id in constant recipe (awaited )
         state.recipe =  new Recipe(recipeID);
@@ -80,9 +84,9 @@ const ctrlRecipe=async()=> {
             state.recipe.parseIngredients();
             console.log(state.recipe);
             } catch(error){console.log(error);}
-            stopLoader();
-            recipeView.clearRecipe();
             recipeView.renderRecipe(state.recipe);
+            //recipeView.clearRecipe();
+
 
 
 

@@ -67,6 +67,7 @@ const showPages=(currentPage,lastpage) => {
 
 }
 export const renderInput=(dataArray,page=1,elToshow=10) =>{
+    console.log(dataArray);
     const start=(page-1)*elToshow;
     const end=Math.ceil(elToshow*page);
     dataArray.slice(start,end).forEach(renderElement);
