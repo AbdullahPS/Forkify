@@ -15,7 +15,9 @@ module.exports= {
     plugins:[
         new HtmkWebpackPlugin({
             filename:"index.html",
-            template:'./src/index.html'
+            template:'./src/index.html',
+            inject: false 
+
         })
     ],
     module:{
