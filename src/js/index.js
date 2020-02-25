@@ -67,25 +67,29 @@ const ctrlRecipe=async()=> {
 
 
 //get the id of the recipe from the url
-  
+recipeView.clearRecipe();
     const recipeID = window.location.hash.replace('#','');
+
     if(recipeID){
 
         //get ui ready
         if(state.recipe)
-        {renderLoader(element.recipeForm);
+        {
+  
         //remove the hashtag in it
         searchView.highlightSelected(recipeID);}
 
-        //create a new recipe witht the given id in constant recipe (awaited )
+        //create a new recipe witht the given id in constant recipe (swaited )
         state.recipe =  new Recipe(recipeID);
-            try{
-            await state.recipe.getRecipe();
-            state.recipe.parseIngredients();
-            console.log(state.recipe);
+        renderLoader(element.recipeForm);
+
+         try{
+        await state.recipe.getRecipe();
+        state.recipe.parseIngredients();
+         console.log(state.recipe);
             } catch(error){console.log(error);}
-            recipeView.renderRecipe(state.recipe);
-            //recipeView.clearRecipe();
+        stopLoader();
+        recipeView.renderRecipe(state.recipe);
 
 
 
