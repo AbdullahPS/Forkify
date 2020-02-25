@@ -1,7 +1,7 @@
 
 //Search Controller
 import Search from './models/Search'
-import {element,renderLoader,stopLoader} from './views/base'
+import {element,renderLoader,stopLoader,convertFraction} from './views/base'
 import * as searchView from './views/searchView'
 import * as recipeView from './views/recipeView'
 
@@ -44,7 +44,6 @@ const ctrlSearch = async() => {
 element.searchForm.addEventListener('submit',(e)=>{
     e.preventDefault();
     ctrlSearch();
-    console.log('hello');
 
 
 });
@@ -86,7 +85,7 @@ recipeView.clearRecipe();
          try{
         await state.recipe.getRecipe();
         state.recipe.parseIngredients();
-         console.log(state.recipe);
+        console.log(state.recipe);
             } catch(error){console.log(error);}
         stopLoader();
         recipeView.renderRecipe(state.recipe);
@@ -97,3 +96,15 @@ recipeView.clearRecipe();
         }
 }
 ['hashchange','load'].forEach(cur => window.addEventListener(cur,ctrlRecipe));
+
+element.recipeForm.addEventListener('click',e=>{
+    if(e.target.matches('.btn-increase, .btn-increase * '))
+        state.recipe.updateRecipe('inc');
+    else  if(e.target.matches('.btn-decrease, .btn-decrease * '))
+        state.recipe.updateRecipe('dec');
+
+console.log(e.target.matches('.btn-increase, .btn-increase * '));
+console.log(e.target.matches('.btn-decrease, .btn-decrease * '));
+} );
+console.log('testing');
+console.log(convertFraction(1.25));

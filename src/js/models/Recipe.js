@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {convertFraction} from '../views/base';
 export default class Recipe{
     constructor(id){
         this.id=id;
@@ -36,7 +37,6 @@ export default class Recipe{
         let ingredient = this.ingredients.map((el)=>{
 
              ingredient=el.toLowerCase();
-             console.log(ingredient);
                 original.forEach((cur,i)=>{
                     ingredient=ingredient.replace(cur,abbreviations[i]);
 
@@ -52,17 +52,21 @@ export default class Recipe{
              *  if there is an index <-1 we have the index of the unit
              * sometimes there is a 'number' 'like 1 piece' we need this number to take it also  
              * */
-            const unitIndex=arrIngredient.findIndex(el2=>units.includes(el2));
-                console.log(arrIngredient);
+            const unitIndex=arrIngredient.findIndex(el2=>units.includes(el2)); //loop throuh ingredients array
             let objIng={};
             
              if(unitIndex>-1){//there is a unit 
-                console.log('unit index is' +unitIndex)
-                const firstNum=arrIngredient[unitIndex-2];
+                /**since the unit has the number before it, we have to check if this is one 
+                 *  or two digit ([1] or [1] [1/12])
+                 *we save them in an variable and will get undefined in firstnum if there's jsut one digit 
+                 */
+                const firstNum=arrIngredient[unitIndex-2]; 
                 const secondNum=arrIngredient[unitIndex-1];
                 objIng.number='';
+                //check for undefined and assign them to number 
                 typeof firstNum === 'undefined' ? objIng.number=secondNum :objIng.number=firstNum+' '+secondNum ;
-      
+                
+                
                 objIng.unit=arrIngredient[unitIndex];
                 objIng.rest=arrIngredient.slice(unitIndex+1,arrIngredient.length).join(' ');
 
@@ -86,6 +90,58 @@ export default class Recipe{
         });
         this.ingredients = ingredient;
         
+    }
+    updateRecipe(type){
+        const newServings =type==='inc'? this.servings+1 :this.servings-1;
+        this.ingredients.forEach(element =>{
+            const operator=parseFloat(newServings/this.servings)
+            if (typeof(element.number)==="number"){
+                element.number*=operator;
+            if(!(Number.isInteger(element.number)))element.number=convertFraction(element.number);
+           }
+            else if(typeof(element.number==="string")){
+
+                if(element.number.length==1){
+                    element.number=parseInt(element.number);
+                    element.number*=operator;
+                     if(!(Number.isInteger(element.number)))element.number=convertFraction(element.number);}
+                else if (element.number.length==3){//this means we have a (1/3)
+                    //get first num and second
+                    const firstNum=parseInt(element.number.charAt(0));
+                    const secondNum=parseInt(element.number.charAt(2));
+
+                    //make devition
+                    const newNum=parseFloat(firstNum/secondNum);
+                    //multiply and convert to fraction
+                    element.number=convertFraction(parseFloat(operator*newNum));
+                    if(Number.isInteger(parseInt(element.number))); //for the case we got an integer here 
+                    element.number=parseInt(element.number);
+
+                    console.log(`${firstNum},${secondNum},${newNum},${element.number}`)
+                }
+                else  { //here we have (3 1/3) format // or 
+
+                      //split string into number and fraction
+
+                    const array = element.number.split(/[ /]/);
+
+                    //get firs number  //get the fraction
+                    const firstNum=parseInt(array[0]);
+                    const firstFrac=parseInt(array[1]);
+                    const secondFrac=parseInt(array[2]);
+                    
+                    //make devition  //add both together
+                    const newNum=parseFloat(firstFrac/secondFrac)+firstNum;
+
+                      //multiply and convert to fraction
+                    element.number=convertFraction(parseFloat(operator*newNum));
+
+                }
+            }
+        });
+
+        console.log(this);
+
     }
 
 
