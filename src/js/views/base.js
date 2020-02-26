@@ -60,7 +60,7 @@ export const  convertFraction = function (_decimal) {
         obj.bottom=parseInt(obj.bottom);
         //get  the natural number 25/6 = 4
         const intRem=parseInt(obj.top/obj.bottom);
-        console.log('intrem'+intRem);
+        // console.log('intrem'+intRem);
         //calculate (fraction is 25-6*4 /6 ) 
         const  firstFrac = obj.top-obj.bottom*intRem+''
         return intRem+' '  +firstFrac +'/' + obj.bottom;

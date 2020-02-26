@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {convertFraction} from '../views/base';
+import {convertFraction, element} from '../views/base';
 export default class Recipe{
     constructor(id){
         this.id=id;
@@ -105,10 +105,12 @@ export default class Recipe{
                     element.number=parseInt(element.number);
                     element.number*=operator;
                      if(!(Number.isInteger(element.number)))element.number=convertFraction(element.number);}
-                else if (element.number.length==3){//this means we have a (1/3)
+                else if (element.number.split(/[ /]/).length===2){//this means we have a (1/3)
                     //get first num and second
-                    const firstNum=parseInt(element.number.charAt(0));
-                    const secondNum=parseInt(element.number.charAt(2));
+                    const arrThree=element.number.split('/');
+                    console.log('bingo'+arrThree);
+                    const firstNum=parseInt(arrThree[0]);
+                    const secondNum=parseInt(arrThree[1]);
 
                     //make devition
                     const newNum=parseFloat(firstNum/secondNum);
@@ -139,10 +141,11 @@ export default class Recipe{
                 }
             }
         });
-
-        console.log(this);
+        this.servings=type==='inc'? this.servings+1 :this.servings-1;
+    } 
+   
+   
 
     }
 
 
-}

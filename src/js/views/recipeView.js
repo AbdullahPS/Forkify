@@ -103,4 +103,13 @@ element.recipeForm.insertAdjacentHTML('afterbegin',markup);
 
 
 }
+export const renderUpdateRecipe=(type,recipe)=>{
+    document.querySelector('.recipe__info-data--people').textContent=recipe.servings;
+    document.querySelectorAll('.recipe__count').forEach((cur,i)=>{
+        cur.textContent=recipe.ingredients[i].number;
+
+
+    });
+
+}
 

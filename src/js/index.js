@@ -97,14 +97,22 @@ recipeView.clearRecipe();
 }
 ['hashchange','load'].forEach(cur => window.addEventListener(cur,ctrlRecipe));
 
-element.recipeForm.addEventListener('click',e=>{
-    if(e.target.matches('.btn-increase, .btn-increase * '))
-        state.recipe.updateRecipe('inc');
-    else  if(e.target.matches('.btn-decrease, .btn-decrease * '))
-        state.recipe.updateRecipe('dec');
 
-console.log(e.target.matches('.btn-increase, .btn-increase * '));
-console.log(e.target.matches('.btn-decrease, .btn-decrease * '));
+//check if either decrease or increase was clicked
+element.recipeForm.addEventListener('click',e=>{ ///am at 2 when i click i want to update and enter
+    console.log(state.recipe.servings);
+    if(e.target.matches('.btn-increase, .btn-increase * ')){
+        if(state.recipe.servings<9){
+        state.recipe.updateRecipe('inc');
+        recipeView.renderUpdateRecipe('inc',state.recipe);}
+
+    }
+
+    else  if(e.target.matches('.btn-decrease, .btn-decrease * ')){
+        if(state.recipe.servings>1){
+        state.recipe.updateRecipe('dec');
+        recipeView.renderUpdateRecipe('dec',state.recipe);
+        }
+    }
+//update gui
 } );
-console.log('testing');
-console.log(convertFraction(1.25));
