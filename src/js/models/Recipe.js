@@ -115,6 +115,7 @@ export default class Recipe{
                     //make devition
                     const newNum=parseFloat(firstNum/secondNum);
                     //multiply and convert to fraction
+                    console.log(parseFloat(operator*newNum));
                     element.number=convertFraction(parseFloat(operator*newNum));
                     if(Number.isInteger(parseInt(element.number))); //for the case we got an integer here 
                     element.number=parseInt(element.number);
