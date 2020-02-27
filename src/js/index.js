@@ -154,22 +154,25 @@ const ctrlLike =()=>{
     if(state.like.isLiked(state.recipe.id)){
         //add a like to model
         state.like.addLike(state.recipe.id,state.recipe.title,state.recipe.image);
+
         //update in ui    
-        console.log(state.like); 
         likeView.addLiker(state.recipe);
         likeView.toggleLike(true);
 
 
     }
-    //removes like if theres one 
+    //removes like if theres one (IT/S LIKED)
     else if(!state.like.isLiked(state.recipe.id)){
         //remove like from model 
         state.like.removeLike(state.recipe.id);
         //update ui 
         likeView.removeLike(state.recipe.id);
+
         likeView.toggleLike(false);
 
     }
+    likeView.likeViewShow(state.like.array)
+
 
 
 
