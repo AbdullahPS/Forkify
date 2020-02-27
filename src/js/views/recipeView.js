@@ -1,6 +1,6 @@
 import {element} from './base'; 
 export const clearRecipe=()=>element.recipeForm.innerHTML='';
-export const renderRecipe=recipe=>{
+export const renderRecipe=(recipe,isLiked)=>{
 
     let listIngredientsMarkup='';
     
@@ -58,7 +58,7 @@ const markup = `
 </div>
 <button class="recipe__love">
     <svg class="header__likes">
-        <use href="img/icons.svg#icon-heart-outlined"></use>
+        <use href="img/icons.svg#icon-heart${isLiked?'':'-outlined'}"></use>
     </svg>
 </button>
 </div>

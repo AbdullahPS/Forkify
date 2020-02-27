@@ -6,7 +6,8 @@ parentResult:document.querySelector('.results'),
 resultPages:document.querySelector('.results__pages'),
 recipeForm:document.querySelector('.recipe'),
 recipeFormList:document.querySelector('.recipe__ingredients'),
-shopping:document.querySelector('.shopping__list')
+shopping:document.querySelector('.shopping__list'),
+likeList:document.querySelector('.likes__list')
 
 
 

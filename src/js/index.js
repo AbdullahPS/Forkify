@@ -9,6 +9,7 @@ import List from './models/shoppingList'
 import * as listView from './views/listView'
 import expectedRound from 'expected-round'
 import Like from './models/Likes'
+import * as likeView from './views/likesView'
 
 
 /** Global state of ther app
@@ -90,7 +91,9 @@ recipeView.clearRecipe();
         console.log(state.recipe);
             } catch(error){console.log(error);}
         stopLoader();
-        recipeView.renderRecipe(state.recipe);
+        recipeView.renderRecipe(
+            state.recipe);
+            // state.like.isLiked(id));
 
 
 
@@ -151,13 +154,21 @@ const ctrlLike =()=>{
     if(state.like.isLiked(state.recipe.id)){
         //add a like to model
         state.like.addLike(state.recipe.id,state.recipe.title,state.recipe.image);
-        //update in ui     
+        //update in ui    
+        console.log(state.like); 
+        likeView.addLiker(state.recipe);
+        likeView.toggleLike(true);
+
+
     }
     //removes like if theres one 
     else if(!state.like.isLiked(state.recipe.id)){
         //remove like from model 
         state.like.removeLike(state.recipe.id);
         //update ui 
+        likeView.removeLike(state.recipe.id);
+        likeView.toggleLike(false);
+
     }
 
 
