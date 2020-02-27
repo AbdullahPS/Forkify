@@ -8,7 +8,7 @@ import Recipe from './models/Recipe'
 import List from './models/shoppingList'
 import * as listView from './views/listView'
 import expectedRound from 'expected-round'
-
+import Like from './models/Likes'
 
 
 /** Global state of ther app
@@ -140,6 +140,33 @@ const addtoShoppinglist=(ingredient)=>{
 
 }
 
+
+//Like controller
+const ctrlLike =()=>{
+
+    //create a new liki if there is nooone
+    if(!state.like) state.like=new Like();
+
+    //check if its not liked
+    if(state.like.isLiked(state.recipe.id)){
+        //add a like to model
+        state.like.addLike(state.recipe.id,state.recipe.title,state.recipe.image);
+        //update in ui     
+    }
+    //removes like if theres one 
+    else if(!state.like.isLiked(state.recipe.id)){
+        //remove like from model 
+        state.like.removeLike(state.recipe.id);
+        //update ui 
+    }
+
+
+
+}
+
+
+
+
 ['hashchange','load'].forEach(cur => window.addEventListener(cur,ctrlRecipe));
 
 
@@ -166,6 +193,11 @@ if (e.target.matches('.shopping__delete,.shopping__delete *')){
 })
 
 
+
+
+
+
+
 //check if either decrease or increase was clicked
 element.recipeForm.addEventListener('click',e=>{ ///am at 2 when i click i want to update and enter
     console.log(state.recipe.servings);
@@ -187,8 +219,12 @@ element.recipeForm.addEventListener('click',e=>{ ///am at 2 when i click i want 
         addtoShoppinglist(state.recipe.ingredients);
 
     }
+    else if (e.target.matches('.recipe__love, .recipe__love *')){
+        ctrlLike();
+
+
+    }
 
  
-//update gui
 } );
 
