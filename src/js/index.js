@@ -154,10 +154,10 @@ const ctrlLike =()=>{
     //check if its not liked
     if(!state.like.isLiked(state.recipe.id)){
         //add a like to model
-        const arraey= state.like.addLike(state.recipe.id,state.recipe.author,state.recipe.title,state.recipe.image);
+        const arraey= state.like.addLike(state.recipe.id,state.recipe.title,state.recipe.author,state.recipe.image);
         //update in ui    
         console.log(arraey[0]);
-        likeView.addLiker(arraey[0]);
+        likeView.addLiker(arraey[arraey.length-1]);
         likeView.toggleLike(true);
 
 
