@@ -84,7 +84,6 @@ recipeView.clearRecipe();
         //create a new recipe witht the given id in constant recipe (swaited )
         state.recipe =  new Recipe(recipeID);
         renderLoader(element.recipeForm);
-
          try{
         await state.recipe.getRecipe();
         state.recipe.parseIngredients();
@@ -92,7 +91,9 @@ recipeView.clearRecipe();
             } catch(error){console.log(error);}
         stopLoader();
         recipeView.renderRecipe(
-            state.recipe);
+            state.recipe,
+            state.like.isLiked(recipeID));
+
             // state.like.isLiked(id));
 
 
@@ -151,18 +152,18 @@ const ctrlLike =()=>{
     if(!state.like) state.like=new Like();
 
     //check if its not liked
-    if(state.like.isLiked(state.recipe.id)){
+    if(!state.like.isLiked(state.recipe.id)){
         //add a like to model
-        state.like.addLike(state.recipe.id,state.recipe.title,state.recipe.image);
-
+        const arraey= state.like.addLike(state.recipe.id,state.recipe.author,state.recipe.title,state.recipe.image);
         //update in ui    
-        likeView.addLiker(state.recipe);
+        console.log(arraey[0]);
+        likeView.addLiker(arraey[0]);
         likeView.toggleLike(true);
 
 
     }
     //removes like if theres one (IT/S LIKED)
-    else if(!state.like.isLiked(state.recipe.id)){
+    else if(state.like.isLiked(state.recipe.id)){
         //remove like from model 
         state.like.removeLike(state.recipe.id);
         //update ui 
@@ -173,7 +174,7 @@ const ctrlLike =()=>{
     }
     likeView.likeViewShow(state.like.array)
 
-
+    localStorage.setItem('likes',state.like);
 
 
 }
@@ -195,10 +196,8 @@ const id= e.target.closest('.shopping__item').dataset.imemid;
 console.log(id);
 
 if (e.target.matches('.shopping__delete,.shopping__delete *')){
-    console.log('am here');
     state.list.deleteItem(id);
     listView.deleteItem(id);
-    console.log(state.list);
 
 
 
@@ -242,3 +241,19 @@ element.recipeForm.addEventListener('click',e=>{ ///am at 2 when i click i want 
  
 } );
 
+//onload to get the saved recipes and display them when there are there 
+
+window.addEventListener('load',()=>{
+if(!state.like)state.like=new Like();
+state.like.getFromLocalStorage();
+//show the heart icon
+state.like.array.forEach(cur=>{
+    likeView.addLiker(cur);
+
+
+    });
+likeView.likeViewShow(state.like.array);
+
+
+
+})
